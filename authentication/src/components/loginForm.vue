@@ -5,22 +5,25 @@ export default {
     return {
       username: null,
       password: null,
-      visible:false
+      visible: false,
+      receivedUsername : this.$route.query.username,
+      receivedPassword : this.$route.query.password
     };
   },
+  
   methods: {
     handleValues() {
-      if (this.username === "rupesh2004" && this.password === "rupesh@123") {
-        this.visible=true;
+      if (this.username == this.receivedUsername && this.password == this.receivedPassword) {
+        alert("Login Successful")
       } else {
         alert("Invalid Credentials");
       }
     },
-    gotoRegister(){
-      this.$router.push({name: 'SignUpForm'})
-    }
+    gotoRegister() {
+      this.$router.push({ name: "SignUpForm" });
+    },
   },
-}
+};
 </script>
 
 <template>
@@ -49,20 +52,16 @@ export default {
           />
         </div>
         <button type="submit" class="btn-submit">Login</button>
-        <p class="noAcc" @click="gotoRegister">Don't Have an Account? Register</p>
-        
+        <p class="noAcc">
+          Don't Have an Account? 
+          <span class="register-link" @click="gotoRegister">Register Here</span>
+        </p>
       </form>
     </div>
   </div>
 </template>
 
 <style scoped>
-.noAcc {
-  margin-top: 10px;
-  display: block;
-  text-align: center;
-}
-
 .login-container {
   display: flex;
   justify-content: center;
@@ -124,5 +123,24 @@ input:focus {
 
 .btn-submit:hover {
   background-color: #2980b9;
+}
+
+.noAcc {
+  margin-top: 15px;
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+}
+
+.register-link {
+  color: #3498db;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.register-link:hover {
+  color: #2980b9;
+  text-decoration: none;
 }
 </style>

@@ -14,6 +14,13 @@ export default {
   methods: {
     handleSubmit() {
       if (this.username && this.email && this.password && this.gender ) {
+        this.$router.push({
+          name:"LoginForm",
+          query: {
+            username: this.username,
+            password: this.password
+          }
+        })
         this.visible=true;
       } else {
         this.visible=false
@@ -21,7 +28,7 @@ export default {
       }
     },
     gotoLogin(){
-      this.$router.push({name: 'Login', params: {username: this.username}})
+      this.$router.push({name: 'LoginForm'})
     }
   },
 };
@@ -112,7 +119,7 @@ export default {
           </div>
         </div>
         <button type="submit" class="btn-submit">Sign Up</button>
-        <p>Didn't have an account? <Span style="color: blue;cursor:pointer" @click="gotoLogin">Sign Up</Span></p>
+        <p>Already have an account? <Span style="color: blue;cursor:pointer" @click="gotoLogin">Login</Span></p>
       </form>
 
     </div>

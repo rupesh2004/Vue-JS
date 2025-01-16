@@ -1,5 +1,5 @@
 {
-  "name": "ref-demo",
+  "name": "teleport-component",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -9,7 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "ref-demo": "file:",
+    "teleport-component": "file:",
     "vue": "^3.5.13"
   },
   "devDependencies": {

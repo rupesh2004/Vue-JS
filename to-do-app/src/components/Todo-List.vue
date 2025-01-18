@@ -36,7 +36,7 @@ export default {
   data() {
     return {
       id: 0,
-      todos: [],
+      todos: JSON.parse(localStorage.getItem('todos')) || [],  // Load from localStorage
       title: null,
       content: null,
       isEditing: false,  // Check if editing
@@ -70,6 +70,9 @@ export default {
           });
         }
 
+        // Save todos to localStorage
+        this.saveTodosToLocalStorage();
+
         // Clear the inputs
         this.title = null;
         this.content = null;
@@ -98,11 +101,18 @@ export default {
     deleteTodo(todoId) {
       // Remove the todo by its ID
       this.todos = this.todos.filter(todo => todo.id !== todoId);
+
+      // Save updated todos to localStorage
+      this.saveTodosToLocalStorage();
     },
+
+    // Method to save todos to localStorage
+    saveTodosToLocalStorage() {
+      localStorage.setItem('todos', JSON.stringify(this.todos));
+    }
   },
 };
 </script>
-
 
 <style scoped>
 .container {
@@ -201,6 +211,7 @@ export default {
   background: #ffffff;
   padding-left : 10px;
   padding-right:10px;
+  margin-bottom: 15px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s ease;

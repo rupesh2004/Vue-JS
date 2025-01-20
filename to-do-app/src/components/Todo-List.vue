@@ -1,18 +1,30 @@
 <template>
   <div class="container">
-    <h1 class="title">TO Do List</h1>
+    <h1 class="title">To-Do List</h1>
     <div class="input-group">
-      <input type="text" class="input-box" placeholder="Enter Title" v-model="title">
-      <input type="text" class="input-box" placeholder="Enter Content" v-model="content">
+      <input
+        type="text"
+        class="input-box"
+        placeholder="Enter Title"
+        v-model="title"
+      />
+      <input
+        type="text"
+        class="input-box"
+        placeholder="Enter Content"
+        v-model="content"
+      />
     </div>
     <div class="button-group">
-      <!-- Button changes text dynamically -->
-      <button class="btn" @click="addTodo">{{ btnTitle }}</button>
-      <button class="btn btn-secondary">View Notes</button>
+      <!-- Button dynamically changes based on edit mode -->
+      <button class="btn" @click="id ? saveTodo() : addTodo()">
+        {{ id ? "Save Changes" : "Add Task" }}
+      </button>
+      <button class="btn btn-secondary" @click="viewTodos">View Notes</button>
     </div>
     <div class="display-group">
       <ul class="todo-list">
-        <li class="todo-item" v-for="items in todos" :key="items.id">
+        <li class="todo-item" v-for="items in todoList.todoArray" :key="items.id">
           <div class="todo-content">
             <p class="todo-text">
               <strong>ID: </strong>{{ items.id }}<br />
@@ -31,88 +43,69 @@
 </template>
 
 <script>
+import { useTodo } from "../store.js";
+import { ref } from "vue";
+
 export default {
   name: "TodoList",
-  data() {
-    return {
-      id: 0,
-      todos: JSON.parse(localStorage.getItem('todos')) || [],  // Load from localStorage
-      title: null,
-      content: null,
-      isEditing: false,  // Check if editing
-      editingTodoId: null,  // Store the ID of the todo being edited
-      btnTitle: "Add Note",  // Default button text
+  setup() {
+    const todoList = useTodo();
+    const title = ref("");
+    const content = ref("");
+    const id = ref(0); // Keeps track of the current ID for editing
+
+    const addTodo = () => {
+      const maxId = Math.max(0, ...todoList.todoArray.map((todo) => todo.id));
+      todoList.addTodos(maxId + 1, title.value, content.value);
+      alert("Note Added!");
+      title.value = "";
+      content.value = "";
     };
-  },
-  methods: {
-    // Method to add or update todo
-    addTodo() {
-      if (this.title && this.content) {
-        if (this.isEditing) {
-          // Find the todo by ID and update its title and content
-          const todoIndex = this.todos.findIndex(todo => todo.id === this.editingTodoId);
-          if (todoIndex !== -1) {
-            this.todos[todoIndex].title = this.title;
-            this.todos[todoIndex].content = this.content;
-          }
 
-          // Reset the editing state
-          this.isEditing = false;
-          this.editingTodoId = null;
-          this.btnTitle = "Add Note";  // Reset button text
-        } else {
-          // Add new todo
-          this.id++;
-          this.todos.push({
-            id: this.id,
-            title: this.title,
-            content: this.content,
-          });
-        }
+    const deleteTodo = (id) => {
+      todoList.deleteTodo(id);
+      alert("Note Deleted!");
+    };
 
-        // Save todos to localStorage
-        this.saveTodosToLocalStorage();
+    const editTodo = (item) => {
+      id.value = item.id; // Assign the current item's ID to track edits
+      title.value = item.title;
+      content.value = item.content;
+    };
 
-        // Clear the inputs
-        this.title = null;
-        this.content = null;
+    const saveTodo = () => {
+      const index = todoList.todoArray.findIndex((todo) => todo.id === id.value);
+      if (index !== -1) {
+        todoList.todoArray[index].title = title.value;
+        todoList.todoArray[index].content = content.value;
+        alert("Note Edited Successfully!");
+        title.value = "";
+        content.value = "";
+        id.value = 0;
       } else {
-        alert("Please fill in the title and content");
+        alert("Note not found!");
       }
-    },
+    };
 
-    // Method to edit a todo
-    editTodo(todo) {
-      // Set the input fields to the selected todo's title and content
-      this.title = todo.title;
-      this.content = todo.content;
+    const viewTodos = () => {
+      console.log(todoList.todoArray);
+    };
 
-      // Set editing mode
-      this.isEditing = true;
-
-      // Store the ID of the todo being edited
-      this.editingTodoId = todo.id;
-
-      // Change the button text to "Update Note"
-      this.btnTitle = "Update Note";
-    },
-
-    // Method to delete a todo
-    deleteTodo(todoId) {
-      // Remove the todo by its ID
-      this.todos = this.todos.filter(todo => todo.id !== todoId);
-
-      // Save updated todos to localStorage
-      this.saveTodosToLocalStorage();
-    },
-
-    // Method to save todos to localStorage
-    saveTodosToLocalStorage() {
-      localStorage.setItem('todos', JSON.stringify(this.todos));
-    }
+    return {
+      todoList,
+      title,
+      content,
+      id,
+      addTodo,
+      deleteTodo,
+      editTodo,
+      saveTodo,
+      viewTodos,
+    };
   },
 };
 </script>
+
 
 <style scoped>
 .container {

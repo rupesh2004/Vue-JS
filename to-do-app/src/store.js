@@ -1,18 +1,32 @@
-import { createStore } from 'vuex';
+import {defineStore} from 'pinia'
+export const useTodo = defineStore('todos',{
+    state:()=>{
+        return {
+            todoArray:[]
+        }
+    },
+    actions :{
+        addTodos(id,title,content){
+            const work ={
+                id,title,content
+            }
+            this.todoArray.push(work)
+        },
+        deleteTodo(id){
+            const index = this.todoArray.findIndex(todo=>todo.id === id)
+            if(index !== -1){
+                this.todoArray.splice(index,1)
+            }
 
-export const store = createStore({
-  state: {
-    myData: localStorage.getItem('myData') || '', // Initialize from localStorage
-  },
-  mutations: {
-    setMyData(state, data) {
-      state.myData = data;
-      localStorage.setItem('myData', data); // Persist to localStorage
+        }
+    },
+    persist :{
+        enabled : true,
+        strategies :[{
+            Storage : localStorage,
+            key : 'todoworks',
+            paths : ['todoArray']
+        }]
+
     }
-  },
-  actions: {
-    updateMyData({ commit }, data) {
-      commit('setMyData', data);
-    }
-  }
-});
+})

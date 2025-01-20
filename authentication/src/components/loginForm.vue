@@ -1,28 +1,34 @@
 <script>
+  import {useUserAuth} from '@/stores/auth.js'
+  import {ref} from 'vue'
+  import {useRouter} from 'vue-router'
 export default {
   name: "LoginForm",
-  data() {
-    return {
-      username: null,
-      password: null,
-      visible: false,
-      receivedUsername : this.$route.query.username,
-      receivedPassword : this.$route.query.password
-    };
-  },
-  
-  methods: {
-    handleValues() {
-      if (this.username == this.receivedUsername && this.password == this.receivedPassword) {
+  setup(){
+    const router = useRouter();
+    const userAuth = useUserAuth()
+    const username  = ref('')
+    const password = ref('')
+
+    function handleLogin(){
+      const user = userAuth.userData.find((u)=>{
+        return u.username === username.value && u.password === password.value
+      })  
+      if(user){
         alert("Login Successful")
-      } else {
-        alert("Invalid Credentials");
+      }else{
+        alert("Invalid credential")
       }
-    },
-    gotoRegister() {
-      this.$router.push({ name: "SignUpForm" });
-    },
-  },
+    }
+    function gotoRegister (){
+      router.push({name : "SignUpForm"})
+    }
+
+    return {
+      userAuth,username,password,handleLogin,gotoRegister
+    }
+  }
+
 };
 </script>
 
@@ -30,7 +36,7 @@ export default {
   <div class="login-container">
     <div class="login-form">
       <h2>Login</h2>
-      <form @submit.prevent="handleValues">
+      <form @submit.prevent="handleLogin">
         <div class="form-group">
           <b>Username</b>
           <input

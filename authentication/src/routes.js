@@ -2,7 +2,6 @@ import {createWebHistory, createRouter} from "vue-router"
 import LoginForm from './components/loginForm.vue'
 import SignUpForm from "./components/signupForm.vue"
 import NotFound from "./components/pageNotFound.vue"
-import { name } from "ejs"
 const routes = [
     {
         name : "LoginForm",

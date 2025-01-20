@@ -1,36 +1,39 @@
 <script>
+import { useRouter } from 'vue-router';
+import {useUserAuth} from '../stores/auth.js'
+import { ref } from 'vue';
 export default {
   name: "SignUpForm",
-  data() {
-    return {
-      username: null,
-      email: null,
-      password: null,
-      gender : null,
-      hobbies : [],
-      visible : false
-    };
-  },
-  methods: {
-    handleSubmit() {
-      if (this.username && this.email && this.password && this.gender ) {
-        this.$router.push({
-          name:"LoginForm",
-          query: {
-            username: this.username,
-            password: this.password
-          }
-        })
-        this.visible=true;
-      } else {
-        this.visible=false
-        alert("Please fill all the fields");
-      }
-    },
-    gotoLogin(){
-      this.$router.push({name: 'LoginForm'})
+  setup(){
+    const router = useRouter()
+    const userAuth = useUserAuth();
+
+    const username  = ref('')
+    const email = ref('')
+    const password = ref('')
+    const hobbies = ref([])
+    const gender = ref(null)
+
+    const registerUser = ()=>{
+      userAuth.userRegistration(
+        username.value,
+        password.value,
+        email.value,
+        hobbies.value,
+        gender.value,
+
+      )
+      alert("User Registered")
+      router.push({name : "LoginForm"})
     }
-  },
+    function gotoLogin(){
+      router.push({name : "LoginForm"})
+    }
+    return {
+      userAuth,username,email,password,hobbies,gender,registerUser,gotoLogin
+    }
+
+  }
 };
 </script>
 
@@ -38,7 +41,7 @@ export default {
   <div class="signup-container">
     <div class="signup-form">
       <h2>Sign Up</h2>
-      <form @submit.prevent="handleSubmit">
+      <form @submit.prevent="registerUser">
         <div class="form-group">
           <b>Username</b>
           <input

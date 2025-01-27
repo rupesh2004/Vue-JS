@@ -15,18 +15,18 @@ export const useUserAuth = defineStore('userAuthentication', {
         gender,
       };
       this.userData.push(user);
+
+      console.log('User Registered:', this.userData); // Debug: Check the state
     },
-    
   },
 
-
   persist: {
-    enabled: true,  
+    enabled: true,
     strategies: [
       {
-        storage: sessionStorage,  
         key: 'user-auth',
-        paths : ['userData']
+        storage: sessionStorage, // Use sessionStorage
+        paths: ['userData'], // Persist only `userData`
       },
     ],
   },

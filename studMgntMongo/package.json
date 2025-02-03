@@ -1,5 +1,5 @@
 {
-  "name": "vue-gin",
+  "name": "studmgntmongo",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -9,9 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "axios": "^1.7.9",
+    "cors": "^2.8.5",
+    "studmgntmongo": "file:",
     "vue": "^3.5.13",
-    "vue-gin": "file:"
+    "vue-router": "^4.5.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",

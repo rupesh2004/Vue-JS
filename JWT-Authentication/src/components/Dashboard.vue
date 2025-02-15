@@ -15,8 +15,8 @@ export default {
         // Fetch user profile
         const fetchProfileInfo = async () => {
             try {
-                const token = localStorage.getItem("token");
-                const response = await axios.get("http://localhost:3000/profile", {
+                const token = sessionStorage.getItem("token");
+                const response = await axios.get("http://localhost:3000/r/profile", {
                     headers: {
                         "Authorization": `Bearer ${token}`
                     }
@@ -52,7 +52,7 @@ export default {
 
         // Logout
         const logout = () => {
-            localStorage.removeItem("token");
+            sessionStorage.removeItem("token");
             location.reload();
         };
         const submitUpdatedPassword = async () => {
@@ -67,10 +67,10 @@ export default {
     }
 
     try {
-        const token = localStorage.getItem("token");
+        const token = sessionStorage.getItem("token");
 
 
-        const response = await axios.post("http://localhost:3000/changepassword", {
+        const response = await axios.post("http://localhost:3000/r/changepassword", {
                     oldPassword: oldPassword.value,
                     newPassword: newPassword.value,
                     confirmPassword: confirmPassword.value

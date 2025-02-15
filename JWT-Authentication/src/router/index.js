@@ -22,7 +22,7 @@ const router = createRouter({
       name: 'Dashboard',
       component : Dashboard,
       beforeEnter:(to,from,next)=>{
-        const token  = localStorage.getItem("token")
+        const token  = sessionStorage.getItem("token")
         if(!token){
           next({name:'Login'})
         }else{

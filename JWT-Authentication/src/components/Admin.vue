@@ -35,7 +35,7 @@ export default {
       try {
         const response = await axios.delete(`http://localhost:3000/deleteUser/${email}`);
         console.log("User deleted:", response.data);
-        fetchAllUsers();  // Re-fetch the updated list of users
+        fetchAllUsers();  
       } catch (error) {
         console.error("Error deleting user:", error);
       }
@@ -67,7 +67,6 @@ export default {
           <td>{{ user.email }}</td>
           <td>{{ user.password }}</td>
           <td>
-            <!-- Delete button next to each user -->
             <button class="delete-button" @click="deleteUser(user.email)">Delete</button>
           </td>
         </tr>

@@ -22,7 +22,7 @@ export default {
                 const response = await axios.post("http://localhost:3000/login",user)
                 console.log(response.data)
                 if(response.status === 200){
-                    localStorage.setItem("token",response.data.token)
+                    sessionStorage.setItem("token",response.data.token)
                     email.value=null
                     password.value=null
                     router.push({ name: "Dashboard" });
@@ -45,7 +45,7 @@ export default {
             
         };
         onMounted(()=>{
-            const token = localStorage.getItem("token")
+            const token = sessionStorage.getItem("token")
             if (token){
                 router.push({ name: "Dashboard" });
             }

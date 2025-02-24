@@ -44,14 +44,12 @@ export default {
         const createExam  = ()=>{
             router.push({ name: "CreateExam" });
         }
-        const ViewExam = ()=>{
-            router.push({ name: "ViewExam" });
-        }
+        
 
         // Fetch admin profile on component mount
         onMounted(fetchAdminProfile);
 
-        return { adminProfile, errorMessage, logout, manageUsers, createExam,ViewExam };
+        return { adminProfile, errorMessage, logout, manageUsers, createExam };
     },
 };
 </script>
@@ -63,33 +61,33 @@ export default {
         <nav class="navbar">
             <div class="nav-content">
                 <h2>Admin Dashboard</h2>
-                <button class="logout-btn" @click="logout">Logout</button>
+                <button class="logout-btn" @click="logout">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
             </div>
         </nav>
 
         <!-- Main Content -->
         <div class="content">
-            <h1>Welcome, Admin</h1>
-
             <div class="cards">
                 <!-- User Management Card -->
                 <div class="card">
-                    <h2>User Management</h2>
+                    <i class="fas fa-users-cog card-icon"></i>
+                    <h3>User Management</h3>
                     <p>Manage registered users.</p>
-                    <button class="btn" @click="manageUsers">Manage Users</button>
+                    <button class="btn" @click="manageUsers">
+                        <i class="fas fa-users"></i> Manage Users
+                    </button>
                 </div>
 
-                <!-- Create Exam Card -->
+                <!-- Exam Management Card -->
                 <div class="card">
-                    <h2>Create Exam</h2>
-                    <p>Add new exams for students.</p>
-                    <button class="btn" @click="createExam">Create Exam</button>
-                </div>
-
-                <div class="card">
-                    <h2>View Exam</h2>
-                    <p>View new exams for students.</p>
-                    <button class="btn" @click="ViewExam">View Exam</button>
+                    <i class="fas fa-file-alt card-icon"></i>
+                    <h3>Exam Management</h3>
+                    <p>Manage new exams for students.</p>
+                    <button class="btn" @click="createExam">
+                        <i class="fas fa-pencil-alt"></i> Manage Exam
+                    </button>
                 </div>
             </div>
         </div>
@@ -114,7 +112,7 @@ export default {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #f8f9fa;
+    background-color: #f5f5f5;
     font-family: 'Arial', sans-serif;
 }
 
@@ -166,28 +164,19 @@ export default {
 
 /* Content Section */
 .content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
     flex-grow: 1;
-    height: 100vh; /* Full height to center content */
+    height: 100vh;
     text-align: center;
     padding: 80px 20px;
-}
-
-h1 {
-    margin-bottom: 30px;
-    color: #333;
-    font-size: 28px;
 }
 
 /* Card container */
 .cards {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
+    margin-top: 30px;
+    gap: 30px;
+    animation: fadeIn 1s ease-in-out;
 }
 
 /* Individual card styling */
@@ -197,18 +186,19 @@ h1 {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
     transition: 0.3s;
+    transform: translateY(0);
+    text-align: center;
 }
 
-.card h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
+.card:hover {
+    transform: translateY(-3px);
 }
 
-.card p {
-    font-size: 14px;
-    color: #666;
+/* Card Icons */
+.card-icon {
+    font-size: 40px;
+    color: #007bff;
     margin-bottom: 15px;
 }
 
@@ -275,6 +265,16 @@ h1 {
 
     .card {
         width: 90%;
+    }
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }
 </style>

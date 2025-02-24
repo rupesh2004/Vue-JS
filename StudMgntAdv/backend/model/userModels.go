@@ -36,6 +36,20 @@ type ExamApplication struct {
 	AppliedAt time.Time `bson:"applied_at" json:"appliedAt"`
 }
 
+type DatabaseConfig struct {
+	ServerIP string `json:"server_ip"`
+	Username string `json:"username"`
+	Password string `json:"password"`
+	Database string `json:"database"`
+	Port     int    `json:"port"`
+}
+
+type DatabaseConfiguration struct {
+	Port            string         `json:"port"`
+	MongoConnection DatabaseConfig `json:"mongoConnections"`
+}
+
+
 var (
 	TokenStore = make(map[string]string)
 	mu         sync.Mutex

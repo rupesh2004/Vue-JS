@@ -36,46 +36,74 @@ export default defineComponent({
         <!-- Navbar -->
         <nav class="navbar">
             <div class="nav-content">
-                <h2>User Profile</h2>
-                <button class="btn-nav" @click="goToDashboard">🏠 Dashboard</button>
+                <h2><i class="fas fa-user-circle"></i> User Profile</h2>
+                <button class="btn-nav" @click="goToDashboard">
+                    <i class="fas fa-home"></i> Dashboard
+                </button>
             </div>
         </nav>
 
         <!-- Profile Card -->
         <div class="profile-container">
             <div class="profile-card">
-                <h3>{{ userData.name }}</h3>
+                <div class="profile-header">
+                    <i class="fas fa-user-alt profile-icon"></i>
+                    <h3>{{ userData.name }}</h3>
+                </div>
                 <div class="details">
-                    <p><strong>Username:</strong> {{ userData.username }}</p>
-                    <p><strong>Name :</strong> {{ userData.first_name }} {{ userData.last_name }}</p>
-                    <p><strong>Email:</strong> {{ userData.email }}</p>
-                    <p><strong>Role:</strong> {{ userData.roles }}</p>
-                    <p><strong>Account Created:</strong> {{ new Date(userData.created_on).toLocaleString() }}</p>
-                    <p><strong>Last Updated:</strong> {{ new Date(userData.updated_on).toLocaleString() }}</p>
-                    <p><strong>Created By:</strong> {{ userData.created_by }}</p>
-                    
-                    <p>
-                        <strong>Status:</strong> 
-                        <span :class="{'active': userData.is_active, 'inactive': !userData.is_active}">
-                            {{ userData.is_active ? 'Active' : 'Inactive' }}
+                    <div class="detail-item">
+                        <i class="fas fa-user-tag"></i>
+                        <span><strong>Username:</strong> {{ userData.username }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-user"></i>
+                        <span><strong>Name:</strong> {{ userData.first_name }} {{ userData.last_name }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-envelope"></i>
+                        <span><strong>Email:</strong> {{ userData.email }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-user-shield"></i>
+                        <span><strong>Role:</strong> {{ userData.roles }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-calendar-plus"></i>
+                        <span><strong>Account Created:</strong> {{ new Date(userData.created_on).toLocaleString() }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-edit"></i>
+                        <span><strong>Last Updated:</strong> {{ new Date(userData.updated_on).toLocaleString() }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-user-cog"></i>
+                        <span><strong>Created By:</strong> {{ userData.created_by }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-user-check"></i>
+                        <span>
+                            <strong>Status:</strong>
+                            <span :class="{'active': userData.is_active, 'inactive': !userData.is_active}">
+                                {{ userData.is_active ? 'Active' : 'Inactive' }}
+                            </span>
                         </span>
-                    </p>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Footer -->
+    </div>
         <footer class="footer">
             <div class="footer-content">
                 <p>&copy; 2025 Student Management System. All rights reserved.</p>
                 <div class="footer-links">
-                    <a href="#">Privacy Policy</a> | 
-                    <a href="#">Terms of Service</a> | 
-                    <a href="#">Support</a>
+                    <a href="#"><i class="fas fa-user-secret"></i> Privacy Policy</a> | 
+                    <a href="#"><i class="fas fa-balance-scale"></i> Terms of Service</a> | 
+                    <a href="#"><i class="fas fa-life-ring"></i> Support</a>
                 </div>
             </div>
         </footer>
-    </div>
 </template>
 
 <style scoped>
@@ -84,7 +112,7 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #f8f9fa;
+    background-color: #f5f5f5;
     font-family: 'Arial', sans-serif;
 }
 
@@ -113,12 +141,6 @@ export default defineComponent({
     align-items: center;
 }
 
-.navbar h2 {
-    margin: 0;
-    font-size: 24px;
-}
-
-/* Dashboard Button */
 .btn-nav {
     background-color: #ffffff;
     color: #007bff;
@@ -128,6 +150,9 @@ export default defineComponent({
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .btn-nav:hover {
@@ -137,11 +162,11 @@ export default defineComponent({
 
 /* Profile Container */
 .profile-container {
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-grow: 1;
-    padding: 20px;
+    padding: 100px 20px 20px;
 }
 
 /* Profile Card */
@@ -150,20 +175,50 @@ export default defineComponent({
     padding: 25px;
     border-radius: 10px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.6);
-    text-align: center;
     width: 400px;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.profile-icon {
+    font-size: 50px;
+    color: #007bff;
+    margin-bottom: 10px;
 }
 
 .profile-card h3 {
     font-size: 26px;
-    margin-bottom: 15px;
     color: #333;
 }
 
-.details p {
+/* Profile Details */
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
     font-size: 16px;
     color: #555;
-    margin-bottom: 10px;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.detail-item i {
+    font-size: 18px;
+    color: #007bff;
+    width: 25px;
+    text-align: center;
 }
 
 /* Status */
@@ -183,10 +238,7 @@ export default defineComponent({
     color: white;
     text-align: center;
     padding: 15px 0;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
+    margin-top: auto;
 }
 
 .footer-content {
@@ -204,10 +256,25 @@ export default defineComponent({
     text-decoration: none;
     margin: 0 8px;
     font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
 }
 
 .footer-links a:hover {
     text-decoration: underline;
+}
+
+/* Fade-in Animation */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Responsive */
@@ -226,3 +293,4 @@ export default defineComponent({
     }
 }
 </style>
+

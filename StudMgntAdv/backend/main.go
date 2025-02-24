@@ -4,6 +4,7 @@ import (
 	"StudentManagementAdvance/config"
 	"StudentManagementAdvance/routes"
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/gin-contrib/cors"
@@ -12,7 +13,15 @@ import (
 
 func main() {
 
-	config.ConnectMongo()
+	dbConfig, err := config.Init("config.json")
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+
+	fmt.Printf("Loaded DB Config: %+v\n", dbConfig)
+	fmt.Printf("MongoDB URI: %s\n", dbConfig.MongoConnection.ServerIP)
+	fmt.Printf("MongoDB Database: %s\n", dbConfig.MongoConnection.Database)
 
 	router := gin.Default()
 
@@ -32,5 +41,4 @@ func main() {
 	router.Run(":3000")
 }
 
-// TODO: Cyclic error Golang 
-
+// TODO: Cyclic error Golang

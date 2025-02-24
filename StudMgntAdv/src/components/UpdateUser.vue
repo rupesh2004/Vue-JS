@@ -49,7 +49,7 @@ export default {
                 });
 
                 alert("User updated successfully!");
-                router.push({ name: "ViewAllUsers" });
+                router.push({ name: "ManageUsers" });
             } catch (error) {
                 console.error("Error updating user:", error);
                 if (error.response && error.response.status === 401) {
@@ -79,65 +79,88 @@ export default {
         <nav class="navbar">
             <div class="nav-content">
                 <h2>Update User</h2>
-                <button class="btn-nav" @click="$router.push({ name: 'ViewAllUsers' })"> ← Back</button>
+                <button class="btn-nav" @click="$router.push({ name: 'ManageUsers' })">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
             </div>
         </nav>
 
         <!-- Form -->
         <div class="form-container">
             <form @submit.prevent="updateUserProfile" class="form">
-                <label>Username:</label>
-                <input v-model="userData.username" type="text" required />
+                <div class="form-group">
+                    <label><i class="fas fa-user"></i> Username</label>
+                    <input v-model="userData.username" type="text" required />
+                </div>
 
-                <label>First Name:</label>
-                <input v-model="userData.first_name" type="text" required />
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-id-badge"></i> First Name</label>
+                        <input v-model="userData.first_name" type="text" required />
+                    </div>
 
-                <label>Last Name:</label>
-                <input v-model="userData.last_name" type="text" required />
+                    <div class="form-group">
+                        <label><i class="fas fa-id-badge"></i> Last Name</label>
+                        <input v-model="userData.last_name" type="text" required />
+                    </div>
+                </div>
 
-                <label>Email (read-only):</label>
-                <input v-model="userData.email" type="email" readonly />
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> Email (read-only)</label>
+                    <input v-model="userData.email" type="email" readonly />
+                </div>
 
-                <label>Role:</label>
-                <select v-model="userData.roles">
-                    <option value="admin">Admin</option>
-                    <option value="user">User</option>
-                </select>
+                <div class="form-group-row">
+                    <div class="form-group">
+                        <label><i class="fas fa-user-tag"></i> Role</label>
+                        <select v-model="userData.roles">
+                            <option value="admin">Admin</option>
+                            <option value="user">User</option>
+                        </select>
+                    </div>
 
-                <label>Active:</label>
-                <select v-model="userData.is_active">
-                    <option :value="true">Active</option>
-                    <option :value="false">Inactive</option>
-                </select>
+                    <div class="form-group">
+                        <label><i class="fas fa-check-circle"></i> Active</label>
+                        <select v-model="userData.is_active">
+                            <option :value="true">Active</option>
+                            <option :value="false">Inactive</option>
+                        </select>
+                    </div>
+                </div>
 
-                <label>New Password (leave blank to keep current):</label>
-                <input v-model="newPassword" type="password" />
+                <div class="form-group">
+                    <label><i class="fas fa-lock"></i> New Password (leave blank to keep current)</label>
+                    <input v-model="newPassword" type="password" />
+                </div>
 
-                <button type="submit">Update</button>
+                <button type="submit">
+                    <i class="fas fa-save"></i> Update
+                </button>
             </form>
         </div>
 
-        
+        <!-- Footer -->
     </div>
-    <!-- Footer -->
-    <footer class="footer">
+        <footer class="footer">
             <div class="footer-content">
                 <p>&copy; 2025 Student Management System. All rights reserved.</p>
                 <div class="footer-links">
-                    <a href="#">Privacy Policy</a> |
-                    <a href="#">Terms of Service</a> |
-                    <a href="#">Support</a>
+                    <a href="#"><i class="fas fa-user-secret"></i> Privacy Policy</a> |
+                    <a href="#"><i class="fas fa-file-contract"></i> Terms of Service</a> |
+                    <a href="#"><i class="fas fa-headset"></i> Support</a>
                 </div>
             </div>
         </footer>
 </template>
 
 <style scoped>
+/* Main Container */
 .container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    background-color: #f8f9fa;
+    min-width: 100%;
+    background-color: #f5f5f5;
     font-family: 'Arial', sans-serif;
 }
 
@@ -177,6 +200,10 @@ export default {
     transition: 0.3s;
 }
 
+.btn-nav i {
+    margin-right: 5px;
+}
+
 .btn-nav:hover {
     background-color: #0056b3;
     color: white;
@@ -193,19 +220,44 @@ export default {
 }
 
 /* Form Styling */
-.form label {
-    font-weight: bold;
-    margin-top: 10px;
+.form {
+    display: flex;
+    flex-direction: column;
 }
 
-.form input, .form select {
+.form-group {
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-group input,
+.form-group select {
     width: 100%;
     padding: 10px;
-    margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    font-size: 14px;
 }
 
+/* Two Inputs in One Row */
+.form-group-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-group-row .form-group {
+    flex: 1;
+}
+
+/* Button */
 .form button {
     width: 100%;
     margin-top: 20px;
@@ -216,12 +268,18 @@ export default {
     cursor: pointer;
     border-radius: 5px;
     transition: 0.3s;
+    font-size: 16px;
+}
+
+.form button i {
+    margin-right: 5px;
 }
 
 .form button:hover {
     background: #0056b3;
 }
 
+/* Footer */
 .footer {
     width: 100%;
     background-color: #343a40;
@@ -235,12 +293,10 @@ export default {
 }
 
 .footer-content {
-    max-width: 1200px; /* Ensures content doesn’t stretch too wide */
-    margin: 0 auto; /* Centers content */
-    padding: 0 40px; /* Adds space to the left and right */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
 }
-
-
 
 .footer-links {
     margin-top: 5px;
@@ -253,9 +309,18 @@ export default {
     font-size: 14px;
 }
 
+.footer-links a i {
+    margin-right: 5px;
+}
+
 .footer-links a:hover {
     text-decoration: underline;
 }
 
-
+/* Responsive: Stack Inputs on Small Screens */
+@media (max-width: 600px) {
+    .form-group-row {
+        flex-direction: column;
+    }
+}
 </style>

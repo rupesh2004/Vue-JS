@@ -1,0 +1,10 @@
+{
+    "port": "3000",
+    "mongoConnections": {
+        "server_ip": "students-data.76rfc.mongodb.net",  
+        "port": 27017,
+        "database": "studentData",
+        "username": "bhosalerupesh67",
+        "password": "UdpdM6ehgytcszBj"
+    }
+}

@@ -1,5 +1,5 @@
 {
-  "name": "studmgntadv",
+  "name": "vue-layout",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -9,11 +9,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.7.2",
-    "axios": "^1.7.9",
-    "bootstrap": "^5.3.3",
-    "studmgntadv": "file:",
     "vue": "^3.5.13",
+    "vue-layout": "file:",
     "vue-router": "^4.5.0"
   },
   "devDependencies": {

@@ -1,15 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Register from '@/components/Register.vue'
 import Login from '@/components/Login.vue'
 import UserDashboard from '@/components/UserDashboard.vue'
 import AdminDashboard from '@/components/AdminDashboard.vue'
 import UserDetails from '@/components/UserDetails.vue'
 import ManageUsers from '@/components/ManageUsers.vue'
-import ViewAllUsers from '@/components/ViewAllUsers.vue'
 import UpdateUser from '@/components/UpdateUser.vue'
 import CreateExam from '@/components/CreateExam.vue'
-import ViewExamsVue from '@/components/ViewExams.vue'
 import ExamRegistration from '@/components/ExamRegistration.vue'
 
 const router = createRouter({
@@ -19,40 +16,47 @@ const router = createRouter({
       path: '/',
       name: 'Login',
       component: Login,
-    },
-    {
-      path: '/addUser',
-      name: 'Register',
-      component: Register,
+      meta:{
+        authRequired: false,
+        showHeader: true,
+        showFooter: true,
+      }
     },
     {
       path: '/userDashboard',
       name: 'UserDashboard',
       component: UserDashboard,
+      meta: {
+        authRequired: true,
+        role:['user'],
+        showHeader: true,
+        showFooter: true,
+      }
     },
     {
       path: '/adminDashboard',
       name: 'AdminDashboard',
       component: AdminDashboard,
+      meta: {
+        authRequired: true,
+        role: ['admin'],
+        showHeader: true,
+        showFooter: true,
+      },
     },
     {
       path: '/userDetails',
       name: 'UserDetails',
       component: UserDetails,
-      props:true  
+      props: true  
     },
     {
       path: '/userManagement',
       name: 'ManageUsers',
       component: ManageUsers,
-      props:true  
+      props: true  
     },
-    {
-      path: '/viewAllUsers',
-      name: 'ViewAllUsers',
-      component: ViewAllUsers,
-      props:true  
-    },
+    
     {
       path: '/updateUser',
       name: 'UpdateUser',
@@ -64,17 +68,12 @@ const router = createRouter({
       component: CreateExam,
     },
     {
-      path: '/viewExam',
-      name: 'ViewExam',
-      component: ViewExamsVue,
-    },
-    {
       path: '/examRegistration',
       name: 'ExamRegistration',
       component: ExamRegistration,
     },
-    
   ],
 })
 
-export default router
+export default router;
+
